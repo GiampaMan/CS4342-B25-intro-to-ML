@@ -1,19 +1,21 @@
 import numpy as np
 
 def problem1 (A, B, C):
-    return ...
+    return (A @ B) - C
 
 def problem2 (A):
-    return ...
+    return np.ones(A.size)
 
 def problem3 (A):
-    return ...
+    return np.fill_diagonal(A, 0)
 
 def problem4 (A, i):
-    return ...
+    return np.sum(A[i])
 
 def problem5 (A, c, d):
-    return ...
+    bounds = (A >= c) & (A <= d)
+    # If no entries match, np.mean on empty slice returns NaN, which is acceptable unless specified otherwise.
+    return np.mean(A[bounds])
 
 def problem6 (A, k):
     return ...
