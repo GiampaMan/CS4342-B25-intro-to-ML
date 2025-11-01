@@ -68,4 +68,5 @@ P3 = {(w1, w2, w3): trigram_counts[(w1, w2, w3)] / pair_counts[(w1, w2)] for (w1
 # Note: given this relatively weak 3-gram model, not all sentences will be grammatical.
 # This is ok for this assignment.
 # To select from any probability distribution, you can use np.random.choice.
-# TODO ...
+# TODO
+
