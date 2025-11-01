@@ -6,6 +6,9 @@ import numpy as np
 dataset = load_dataset("roneneldan/TinyStories", split="train").shuffle(seed=42)
 counter = Counter()  # Keep track of most common words
 ENOUGH_EXAMPLES = 100000
+unigram_counts = Counter()
+bigram_counts = Counter()
+trigram_counts = Counter()
 for i, story in enumerate(dataset):
     if i == ENOUGH_EXAMPLES:
         break
@@ -33,10 +36,33 @@ for i, story in enumerate(dataset):
         words = sentence.split(" ") + ["."]
         if not set(words).issubset(topWords):  # Ignore any sentence that contains ineligible words
             continue
-        # TODO: process all the 3-grams in each sentence, but ignore any 3-gram if it contains 
-        # a word that is not in topWords.
+        # Count for unigram, bigram, and trigram 
+        for j in range(len(words)):
+            unigram_counts[words[j]] += 1
+            if j >= 1:
+                bigram_counts[(words[j-1], words[j])] += 1
+            if j >= 2:
+                trigram_counts[(words[j-2], words[j-1], words[j])] += 1
+
 
 # TODO: normalize the probability distributions.
+# Unigram prob
+total_unigrams = sum(unigram_counts.values())
+P1 = {w: unigram_counts[w] / total_unigrams for w in unigram_counts}
+
+# Bigram prob
+# Need count of each first word for denominator
+first_word_counts = Counter()
+for (w1, w2), count in bigram_counts.items():
+    first_word_counts[w1] += count
+P2 = {(w1, w2): bigram_counts[(w1, w2)] / first_word_counts[w1] for (w1, w2) in bigram_counts}
+
+# Trigram prob
+# Need count of each (w1, w2) pair for denominator
+pair_counts = Counter()
+for (w1, w2, w3), count in trigram_counts.items():
+    pair_counts[(w1, w2)] += count
+P3 = {(w1, w2, w3): trigram_counts[(w1, w2, w3)] / pair_counts[(w1, w2)] for (w1, w2, w3) in trigram_counts}
 
 # TASK 2 (testing/inference): use the probability distributions to generate 100 new "sentences".
 # Note: given this relatively weak 3-gram model, not all sentences will be grammatical.

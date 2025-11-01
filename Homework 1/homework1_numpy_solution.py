@@ -60,8 +60,7 @@ def problem8(x, k):
     Given an n-vector x and non-negative integer k, return an (n x k) matrix
     consisting of k copies of x.
     """
-    x = np.asarray(x)
-    return np.tile(x.reshape(-1, 1), (1, k))
+    return np.repeat(np.atleast_2d(x).T, k, axis=1)
 
 def problem9(A):
     """

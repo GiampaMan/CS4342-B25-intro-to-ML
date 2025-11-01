@@ -14,29 +14,44 @@ def problem4 (A, i):
 
 def problem5 (A, c, d):
     bounds = (A >= c) & (A <= d)
-    # If no entries match, np.mean on empty slice returns NaN, which is acceptable unless specified otherwise.
     return np.mean(A[bounds])
 
 def problem6 (A, k):
-    return ...
+    eigvals, eigvecs = np.linalg.eig(A)
+
+    magnitudes = np.abs(eigvals)
+
+    top_indices = np.argsort(magnitudes)[::-1][:k]
+
+    top_eigvecs = eigvecs[:, top_indices]
+
+    return top_eigvecs
 
 def problem7 (A, x):
-    return ...
+    return np.linalg.solve(A, x)
 
 def problem8 (x, k):
-    return ...
+     return np.repeat(np.atleast_2d(x).T, k, axis=1)
 
 def problem9 (A):
-    return ...
+    perm = np.random.permutation(A.shape[0])
+    return A[perm, :]
 
 def problem10 (A):
-    return ...
+    return A.np.mean(axis=1)
 
 def problem11 (n, k):
-    return ...
+    arr = np.random.randint(0, k + 1, size=n)
+    for i in arr:    
+        if arr[i]% 2 == 0:
+            arr[i] = -1
+    return arr
 
+# might not be correct
 def problem12 (A, b):
-    return ...
+    b = np.asarray(b).reshape(-1, 1)
+    return A + b
 
 def problem13 (A):
-    return ...
+    n = A.shape[0]
+    return A.reshape(n, -1).T
