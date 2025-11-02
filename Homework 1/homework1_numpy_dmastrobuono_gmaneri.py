@@ -10,7 +10,7 @@ def problem3 (A):
     return np.fill_diagonal(A, 0)
 
 def problem4 (A, i):
-    return np.sum(A[i])
+    return np.sum(A[i, :])
 
 def problem5 (A, c, d):
     bounds = (A >= c) & (A <= d)
