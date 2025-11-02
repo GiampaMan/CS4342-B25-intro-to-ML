@@ -116,6 +116,6 @@ generated_sentences = [generate_sentence(P1, P2, P3) for _ in range(100)]
 
 # Print 
 for s in generated_sentences:
-    print(" ".join(s))
+    print(s)
 
 
