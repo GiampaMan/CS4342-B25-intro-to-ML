@@ -6,16 +6,16 @@ from matplotlib.backends.backend_pdf import PdfPages
 def reshapeAndAppend1s(faces):
     arr = np.asarray(faces)
     if arr.ndim == 3:
-        N, H, W = arr.shape
-        X = arr.reshape(N, H*W)
+        imageNum, heigh, width = arr.shape
+        face = arr.reshape(imageNum, heigh * width)
     elif arr.ndim == 2:
-        N, D = arr.shape
-        X = arr
+        imageNum, _ = arr.shape
+        face = arr
     else:
-        raise ValueError(f"Unexpected faces shape {arr.shape}; expected (N,48,48) or (N,2304)")
-    X = X.astype(np.float64).T
-    ones = np.ones((1, X.shape[1]), dtype=X.dtype)
-    return np.vstack([X, ones])
+        raise ValueError(f"Unexpected 'faces' input shape")
+    face = face.astype(np.float64).T
+    ones = np.ones((1, face.shape[1]), dtype=face.dtype)
+    return np.vstack([face, ones])
 
 def fMSE(wtilde, Xtilde, y):
     yhat = (wtilde @ Xtilde)
